@@ -1,16 +1,17 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useRef } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Image } from 'react-native';
-import { colors } from './src/constants';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
+import { colors } from '../src/constants';
+import { createStackNavigator } from "@react-navigation/stack";
 import { Modalize } from 'react-native-modalize';
 import { FontAwesome } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import DifficultyScreen from './screens/DifficultyScreen';
+import HomeScreen from '../App';
+import GameScreen from '../screens/GameScreen';
 
-function HomeScreen({navigation}){
+function DifficultyScreen({navigation}){
   function buttonPressed(){
-    navigation.navigate('DifficultyScreen');
+    navigation.navigate('GameScreen');
   }
   const modalizeRef = useRef(null);
 
@@ -19,16 +20,22 @@ function HomeScreen({navigation}){
   };
   
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Text style={styles.title}>NoZero</Text>
-      <StatusBar style="auto" hidden={true}/>
-      <Image style={styles.image} source={require('./assets/clip-solving-math-problem.png')} />
-      <TouchableOpacity style={styles.startButton} onPress={buttonPressed}>
-          <Text style={styles.startButtonText}>Start</Text>
+      <TouchableOpacity style={styles.easyButton} onPress={buttonPressed}>
+          <Text style={styles.easyButtonText}>Easy</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.MediumButton} onPress={buttonPressed}>
+          <Text style={styles.easyButtonText}>Medium</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.DifficultButton} onPress={buttonPressed}>
+          <Text style={styles.easyButtonText}>Difficult</Text>
       </TouchableOpacity>
       
       <>
-      <View width="100%" style={{justifyContent:"flex-end",r:"red", flexDirection:"row", paddingRight:20}}>
+      <View width="100%" style={{justifyContent:"flex-end", flexDirection:"row", padding:20}}>
         <TouchableOpacity onPress={onOpen}>
           <FontAwesome name="question-circle-o" size={40} color="#98948E" />
         </TouchableOpacity>
@@ -58,26 +65,24 @@ function HomeScreen({navigation}){
           </View>
         </Modalize>
       </>
-    </SafeAreaView>
+    </View>
   );
 }
 
 
-export default function App() {
-  const Stack = createNativeStackNavigator();
-  return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false
-        }}
-      >
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="DifficultyScreen" component={DifficultyScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-  }
+const Stack = createStackNavigator();
+
+export default function Contactstack() {
+	return (
+		<Stack.Navigator
+      screenOptions={{
+        headerShown: false
+      }}>
+      <Stack.Screen name="DifficultyScreen" component={DifficultyScreen} />
+			<Stack.Screen name="GameScreen" component={GameScreen} />
+		</Stack.Navigator>
+	);
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -86,33 +91,47 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent: 'flex-start',
   },
-  image:{
-    height:200,
-    width:300,
-    marginTop:140,
-    alignSelf:"center"
-  },
 
   title:{
     color:"#98948E",
     fontSize:50,
     fontFamily:"Verdana-Bold",
-    letterSpacing:2
+    letterSpacing:2,
+    top:40
   },
 
-  startButton:{
+  easyButton:{
     backgroundColor:"#98948E",
     justifyContent:"center",
     marginTop:"auto",
-    width:180,
-    height:60,
-    borderRadius:20,
-    bottom:120
+    width:220,
+    height:80,
+    borderRadius:40,
   },
 
-  startButtonText:{
+  MediumButton:{
+    backgroundColor:"#98948E",
+    justifyContent:"center",
+    marginTop:"auto",
+    width:220,
+    height:80,
+    borderRadius:40,
+    bottom:80
+  },
+
+  DifficultButton:{
+    backgroundColor:"#98948E",
+    justifyContent:"center",
+    marginTop:"auto",
+    width:220,
+    height:80,
+    borderRadius:40,
+    bottom:160
+  },
+
+  easyButtonText:{
     color: colors.black,
-    fontSize:25,
+    fontSize:30,
     fontFamily:"AvenirNext-Bold",
     textAlign:"center",
     letterSpacing:3
@@ -140,7 +159,7 @@ const styles = StyleSheet.create({
 
   modaltitle:{
     color:"#d1d1d1",
-    fontSize:30,
+    fontSize:25,
     marginTop:25,
     fontFamily:"AvenirNext-Bold",
     textAlign:"center"

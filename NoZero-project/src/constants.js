@@ -1,11 +1,18 @@
 export const colors = {
-  black: "#121214",
+  black: "#1E1E1E",
   darkgrey: "#3A3A3D",
   grey: "#818384",
   lightgrey: "#D7DADC",
   primary: "#538D4E",
   secondary: "#B59F3B",
 };
+
+export const operators = {
+  add: "+",
+  minus: "-",
+  mulitply:"*",
+  divide:"/"
+}
 
 export const colorsToEmoji = {
   [colors.darkgrey]: "⬛",
