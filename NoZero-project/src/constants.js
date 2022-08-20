@@ -7,6 +7,13 @@ export const colors = {
   secondary: "#B59F3B",
 };
 
+export const operators = {
+  add: "+",
+  minus: "-",
+  mulitply:"*",
+  divide:"/"
+}
+
 export const colorsToEmoji = {
   [colors.darkgrey]: "⬛",
   [colors.primary]: "🟩",

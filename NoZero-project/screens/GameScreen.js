@@ -11,9 +11,6 @@ import gesture from '../components/gesture';
 import CentureSum from '../components/gesture';
 
 function GameScreen({navigation}){
-    function buttonPressed(){
-      navigation.navigate('DifficultyScreen');
-    }
     const modalizeRef = useRef(null);
   
     const onOpen = () => {

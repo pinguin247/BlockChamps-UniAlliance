@@ -2,11 +2,12 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+import { operators } from '../src/constants';
 
-var topnumber = Math.floor(Math.random() * 100) + 1;
-var leftnumber = Math.floor(Math.random() * 100) + 1;
-var rightnumber = Math.floor(Math.random() * 100) + 1;
-var bottomnumber = Math.floor(Math.random() * 100) + 1;
+let topnumber = Math.floor(Math.random() * 100) + 1;
+let leftnumber = Math.floor(Math.random() * 100) + 1;
+let rightnumber = Math.floor(Math.random() * 100) + 1;
+let bottomnumber = Math.floor(Math.random() * 100) + 1;
 
 
 class CentureSum extends Component {
@@ -16,12 +17,22 @@ class CentureSum extends Component {
       myText: 'I\'m ready to get swiped!',
       gestureName: 'none',
       centrenumber: 1,
-      topnumber: Math.floor(Math.random() * 100) + 1
+      score: 0,
+      gameover: false
     };
   }
 
-  setCount = () => this.setState(
-    prevState => ({ ...prevState, count: this.state.centrenumber + 1 })
+  setCount = (number) => this.setState(
+    prevState => ({ ...prevState,
+       centrenumber: this.state.centrenumber + number, 
+       score: this.state.score + 1})
+  )
+
+  setGameOver = (number) => this.setState(
+    prevState => ({ ...prevState,
+      gameover: true,
+      centrenumber: this.state.centrenumber + number,
+      })
   )
 
   onSwipeUp(gestureState) {
@@ -47,40 +58,71 @@ class CentureSum extends Component {
     bottomnumber = Math.floor(Math.random() * 100) + 1
   }
 
-  onSwipe(gestureName, gestureState, centrenumber) {
+  onSwipe(gestureName) {
     const {SWIPE_UP, SWIPE_DOWN, SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
     this.setState({gestureName: gestureName});
-    this.setState({centrenumber: centrenumber});
     switch (gestureName) {
       case SWIPE_UP:
         console.log(gestureName);
-        this.setCount();
+        if((topnumber + this.state.centrenumber).toString().includes("0")){
+
+          this.setGameOver(topnumber);
+        }else{
+          this.setCount(topnumber);
+        }
         this.refreshnumber();
         break;
       case SWIPE_DOWN:
         console.log(gestureName);
+        if((bottomnumber + this.state.centrenumber).toString().includes("0")){
+
+          this.setGameOver(bottomnumber);
+        }else{
+          this.setCount(bottomnumber);
+        }
         this.refreshnumber();
         break;
       case SWIPE_LEFT:
-    //     console.log(gestureName);
-    //     this.refreshnumber();
-    //     break;
-    //   case SWIPE_RIGHT:
-    //     console.log(gestureName);
-    //     this.refreshnumber();
-    //     break;
+        console.log(gestureName);
+        if((leftnumber + this.state.centrenumber).toString().includes("0")){
+
+          this.setGameOver(leftnumber);
+        }else{
+          this.setCount(leftnumber);
+        }
+        this.refreshnumber();
+        break;
+      case SWIPE_RIGHT:
+        console.log(gestureName);
+        if((rightnumber + this.state.centrenumber).toString().includes("0")){
+
+          this.setGameOver(rightnumber);
+        }else{
+          this.setCount(rightnumber);
+        }
+        this.refreshnumber();
+        break;
     }
   }
 
   render() {
     const { centrenumber } = this.state;
+    const isLoggedIn = this.state.gameover;
     const config = {
-      velocityThreshold: 0.3,
+      velocityThreshold: 0.2,
       directionalOffsetThreshold: 80
     };
+    let isGameOver;
+    if(isLoggedIn){
+      isGameOver = <Text style={styles.gameovertext}>Game Over</Text>;
+    }
 
     return (
-    <View>
+    <View style={{top:20}}>
+      <View style={{marginBottom:10}}>
+        <Text style={styles.operatortext}>Operator: {operators.add}</Text>
+      </View>
+
         <View style={styles.topnum}>
             <Text style={styles.centretext}>{topnumber}</Text>
         </View>
@@ -110,8 +152,15 @@ class CentureSum extends Component {
     <View style={styles.bottomnum}>
             <Text style={styles.centretext}>{bottomnumber}</Text>
     </View>
-    
+    <View style={{marginTop:30, marginBottom:50}}>
+      <Text style={styles.scoretext}>Score: {this.state.score}</Text>
     </View>
+
+    {isGameOver}
+
+
+    </View>
+    
     );
   }
 }
@@ -164,6 +213,24 @@ const styles = StyleSheet.create({
         fontSize:30,
         fontFamily:"AvenirNext-Bold",
         textAlign:"center",
+    },
+    operatortext:{
+      color: "#d1cdcd",
+      fontSize:23,
+      fontFamily:"AvenirNext-Bold",
+    },
+    scoretext:{
+      color: "#d1cdcd",
+      fontSize:30,
+      fontFamily:"AvenirNext-Bold",
+      textAlign:"center",
+    },
+    gameovertext:{
+      color:"red",
+      fontSize:30,
+      fontFamily:"AvenirNext-Bold",
+      textAlign:"center",
     }
+    
 });
 export default CentureSum;
