@@ -14,6 +14,11 @@ export const operators = {
   divide:"/"
 }
 
+export const easyoperators = {
+  add: "+",
+  minus: "-"
+}
+
 export const colorsToEmoji = {
   [colors.darkgrey]: "⬛",
   [colors.primary]: "🟩",

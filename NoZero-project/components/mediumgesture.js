@@ -13,7 +13,7 @@ let operator = "+";
 let operatorrounds = 0;
 
 
-class CentureSum extends Component {
+class MediumCentureSum extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,14 +30,14 @@ class CentureSum extends Component {
     prevState => ({ ...prevState,
        centrenumber: this.state.centrenumber + number, 
        score: this.state.score + 1, 
-       operatorrounds: this.state.operatorrounds +1})
+       operatorrounds: this.operatorrounds +1})
   )
 
   minusCount = (number) => this.setState(
     prevState => ({ ...prevState,
        centrenumber: this.state.centrenumber - number, 
        score: this.state.score + 1,
-       operatorrounds: this.state.operatorrounds +1})
+       operatorrounds: this.operatorrounds +1})
   )
 
   setGameOver = (number) => this.setState(
@@ -68,7 +68,7 @@ class CentureSum extends Component {
     leftnumber = Math.floor(Math.random() * 100) + 1
     rightnumber = Math.floor(Math.random() * 100) + 1
     bottomnumber = Math.floor(Math.random() * 100) + 1
-    operator = this.alternatefiverounds()
+    operator = this.randomProperty(operators)
 
   }
 
@@ -77,13 +77,6 @@ class CentureSum extends Component {
     return obj[keys[ keys.length * Math.random() << 0]];
   };
 
-  alternatefiverounds = function() {
-    if(this.state.operatorrounds <= 4 || this.state.operatorrounds > 10){
-      return operators.add;
-    }else{
-      return operators.minus;
-    }
-  };
 
   onSwipe(gestureName) {
     const {SWIPE_UP, SWIPE_DOWN, SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
@@ -91,75 +84,63 @@ class CentureSum extends Component {
     switch (gestureName) {
       case SWIPE_UP:
         console.log(gestureName);
-        console.log(operator);
-        if(operator == "+"){
-          if((topnumber + this.state.centrenumber).toString().includes("0")){
-            this.setGameOver(topnumber);
-          }else{
-              this.addCount(topnumber);
-          }
+        if((topnumber + this.state.centrenumber).toString().includes("0")){
+
+          this.setGameOver(topnumber);
         }else{
-            if((topnumber - this.state.centrenumber).toString().includes("0")){
-              this.setGameOver(topnumber);
-            }else{
-              this.minusCount(topnumber);
+          if(operator == "+"){
+            this.addCount(topnumber);
           }
+          else{
+            this.minusCount(topnumber);
+          }
+          
         }
         this.refreshnumber();
         break;
       case SWIPE_DOWN:
         console.log(gestureName);
-        console.log(operator);
-        if(operator == "+"){
-          if((bottomnumber + this.state.centrenumber).toString().includes("0")){
-            this.setGameOver(bottomnumber);
-          }else{
-              this.addCount(bottomnumber);
-          }
+        if((bottomnumber + this.state.centrenumber).toString().includes("0")){
+
+          this.setGameOver(bottomnumber);
         }else{
-            if((bottomnumber - this.state.centrenumber).toString().includes("0")){
-              this.setGameOver(bottomnumber);
-            }else{
-              this.minusCount(bottomnumber);
+          if(operator == "+"){
+            this.addCount(bottomnumber);
+          }
+          else{
+            this.minusCount(bottomnumber);
           }
         }
         this.refreshnumber();
         break;
       case SWIPE_LEFT:
         console.log(gestureName);
-        console.log(operator);
-        if(operator == "+"){
-          if((leftnumber + this.state.centrenumber).toString().includes("0")){
-            this.setGameOver(leftnumber);
-          }else{
-              this.addCount(leftnumber);
-          }
+        if((leftnumber + this.state.centrenumber).toString().includes("0")){
+
+          this.setGameOver(leftnumber);
         }else{
-            if((leftnumber - this.state.centrenumber).toString().includes("0")){
-              this.setGameOver(leftnumber);
-            }else{
-              this.minusCount(leftnumber);
+          if(operator == "+"){
+            this.addCount(leftnumber);
+          }
+          else{
+            this.minusCount(leftnumber);
           }
         }
         this.refreshnumber();
         break;
       case SWIPE_RIGHT:
         console.log(gestureName);
-        console.log(operator);
-        if(operator == "+"){
-          if((rightnumber + this.state.centrenumber).toString().includes("0")){
-            this.setGameOver(rightnumber);
-          }else{
-              this.addCount(rightnumber);
-          }
+        if((rightnumber + this.state.centrenumber).toString().includes("0")){
+
+          this.setGameOver(rightnumber);
         }else{
-            if((rightnumber - this.state.centrenumber).toString().includes("0")){
-              this.setGameOver(rightnumber);
-            }else{
-              this.minusCount(rightnumber);
+          if(operator == "+"){
+            this.addCount(rightnumber);
+          }
+          else{
+            this.minusCount(rightnumber);
           }
         }
-
         this.refreshnumber();
         break;
     }
@@ -299,4 +280,4 @@ const styles = StyleSheet.create({
     }
     
 });
-export default CentureSum;
+export default MediumCentureSum;

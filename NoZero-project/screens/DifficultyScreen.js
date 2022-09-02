@@ -4,14 +4,29 @@ import { colors } from '../src/constants';
 import { createStackNavigator } from "@react-navigation/stack";
 import { Modalize } from 'react-native-modalize';
 import { FontAwesome } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../App';
 import GameScreen from '../screens/GameScreen';
+import MediumGameScreen from '../screens/MediumGameScreen';
+import HardGameScreen from '../screens/HardGameScreen';
 
 function DifficultyScreen({navigation}){
   function buttonPressed(){
     navigation.navigate('GameScreen');
+  }
+
+  function buttonPressed2(){
+    navigation.navigate('MediumGameScreen');
+  }
+
+  function buttonPressed3(){
+    navigation.navigate('HardGameScreen');
+  }
+
+  function Back(){
+    navigation.goBack();
   }
   const modalizeRef = useRef(null);
 
@@ -26,16 +41,23 @@ function DifficultyScreen({navigation}){
           <Text style={styles.easyButtonText}>Easy</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.MediumButton} onPress={buttonPressed}>
+      <TouchableOpacity style={styles.MediumButton} onPress={buttonPressed2}>
           <Text style={styles.easyButtonText}>Medium</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.DifficultButton} onPress={buttonPressed}>
+      <TouchableOpacity style={styles.DifficultButton} onPress={buttonPressed3}>
           <Text style={styles.easyButtonText}>Difficult</Text>
       </TouchableOpacity>
       
       <>
-      <View width="100%" style={{justifyContent:"flex-end", flexDirection:"row", padding:20}}>
+      
+      <View width="100%" style={{justifyContent:"space-between", flexDirection:"row", padding:20}}>
+      <TouchableOpacity style={{color:"white"}} onPress={Back}>
+        <View style={{flexDirection:"row", justifyContent:"space-between"}}>
+        <Ionicons name="chevron-back" size={24} color="#98948E" />
+        <Text style={{color:"#98948E", marginTop:4, fontFamily:"Verdana-Bold"}}>Back</Text>
+        </View>
+      </TouchableOpacity>
         <TouchableOpacity onPress={onOpen}>
           <FontAwesome name="question-circle-o" size={40} color="#98948E" />
         </TouchableOpacity>
@@ -80,6 +102,8 @@ export default function Contactstack() {
       }}>
       <Stack.Screen name="DifficultyScreen" component={DifficultyScreen} />
 			<Stack.Screen name="GameScreen" component={GameScreen} />
+      <Stack.Screen name="MediumGameScreen" component={MediumGameScreen} />
+      <Stack.Screen name="HardGameScreen" component={HardGameScreen} />
 		</Stack.Navigator>
 	);
 }
