@@ -8,10 +8,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import GameOverScreen from '../screens/GameOverScreen';
 import gesture from '../components/gesture';
-import CentureSum from '../components/gesture';
+import MediumCentureSum from '../components/mediumgesture';
 import { Ionicons } from '@expo/vector-icons';
 
-function GameScreen({navigation}){
+function MediumGameScreen({navigation}){
     const modalizeRef = useRef(null);
   
     const onOpen = () => {
@@ -26,7 +26,7 @@ function GameScreen({navigation}){
       <View style={styles.container}>
         <Text style={styles.title}>NoZero</Text>
         <View style={{height:"100%", width:"100%", alignItems:"center", justifyContent:"center", bottom:70}}>
-            <CentureSum />
+            <MediumCentureSum />
         </View>
         
         
@@ -50,7 +50,7 @@ function GameScreen({navigation}){
           modalStyle={styles.modalstyles}
           >
           <View style={{flex:1, flexDirection:"column", alignContent:"center"}}>
-            <Text style={styles.modaltitle}>How to Play (Easy Mode)</Text>
+            <Text style={styles.modaltitle}>How to Play (Medium Mode)</Text>
             <Text style={styles.modalbodytext}>
             The goal of the game is to avoid any numbers with 0 in it. 
             </Text>
@@ -80,7 +80,7 @@ function GameScreen({navigation}){
         screenOptions={{
           headerShown: false
         }}>
-            <Stack.Screen name="GameScreen" component={GameScreen} />
+            <Stack.Screen name="MediumGameScreen" component={MediumGameScreen} />
         </Stack.Navigator>
       );
   }

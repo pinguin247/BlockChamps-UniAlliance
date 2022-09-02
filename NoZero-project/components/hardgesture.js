@@ -2,18 +2,17 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
-import { easyoperators, operators } from '../src/constants';
+import { operators } from '../src/constants';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 let topnumber = Math.floor(Math.random() * 100) + 1;
 let leftnumber = Math.floor(Math.random() * 100) + 1;
 let rightnumber = Math.floor(Math.random() * 100) + 1;
 let bottomnumber = Math.floor(Math.random() * 100) + 1;
-let operator = "+";
-let operatorrounds = 0;
+let operator = "";
 
 
-class CentureSum extends Component {
+class HardCentureSum extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,23 +20,14 @@ class CentureSum extends Component {
       gestureName: 'none',
       centrenumber: 1,
       score: 0,
-      gameover: false,
-      operatorrounds:0
+      gameover: false
     };
   }
 
-  addCount = (number) => this.setState(
+  setCount = (number) => this.setState(
     prevState => ({ ...prevState,
        centrenumber: this.state.centrenumber + number, 
-       score: this.state.score + 1, 
-       operatorrounds: this.state.operatorrounds +1})
-  )
-
-  minusCount = (number) => this.setState(
-    prevState => ({ ...prevState,
-       centrenumber: this.state.centrenumber - number, 
-       score: this.state.score + 1,
-       operatorrounds: this.state.operatorrounds +1})
+       score: this.state.score + 1})
   )
 
   setGameOver = (number) => this.setState(
@@ -68,22 +58,7 @@ class CentureSum extends Component {
     leftnumber = Math.floor(Math.random() * 100) + 1
     rightnumber = Math.floor(Math.random() * 100) + 1
     bottomnumber = Math.floor(Math.random() * 100) + 1
-    operator = this.alternatefiverounds()
-
   }
-
-  randomProperty = function (obj) {
-    let keys = Object.keys(obj);
-    return obj[keys[ keys.length * Math.random() << 0]];
-  };
-
-  alternatefiverounds = function() {
-    if(this.state.operatorrounds <= 4 || this.state.operatorrounds > 10){
-      return operators.add;
-    }else{
-      return operators.minus;
-    }
-  };
 
   onSwipe(gestureName) {
     const {SWIPE_UP, SWIPE_DOWN, SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
@@ -91,81 +66,46 @@ class CentureSum extends Component {
     switch (gestureName) {
       case SWIPE_UP:
         console.log(gestureName);
-        console.log(operator);
-        if(operator == "+"){
-          if((topnumber + this.state.centrenumber).toString().includes("0")){
-            this.setGameOver(topnumber);
-          }else{
-              this.addCount(topnumber);
-          }
+        if((topnumber + this.state.centrenumber).toString().includes("0")){
+
+          this.setGameOver(topnumber);
         }else{
-            if((topnumber - this.state.centrenumber).toString().includes("0")){
-              this.setGameOver(topnumber);
-            }else{
-              this.minusCount(topnumber);
-          }
+          this.setCount(topnumber);
         }
         this.refreshnumber();
         break;
       case SWIPE_DOWN:
         console.log(gestureName);
-        console.log(operator);
-        if(operator == "+"){
-          if((bottomnumber + this.state.centrenumber).toString().includes("0")){
-            this.setGameOver(bottomnumber);
-          }else{
-              this.addCount(bottomnumber);
-          }
+        if((bottomnumber + this.state.centrenumber).toString().includes("0")){
+
+          this.setGameOver(bottomnumber);
         }else{
-            if((bottomnumber - this.state.centrenumber).toString().includes("0")){
-              this.setGameOver(bottomnumber);
-            }else{
-              this.minusCount(bottomnumber);
-          }
+          this.setCount(bottomnumber);
         }
         this.refreshnumber();
         break;
       case SWIPE_LEFT:
         console.log(gestureName);
-        console.log(operator);
-        if(operator == "+"){
-          if((leftnumber + this.state.centrenumber).toString().includes("0")){
-            this.setGameOver(leftnumber);
-          }else{
-              this.addCount(leftnumber);
-          }
+        if((leftnumber + this.state.centrenumber).toString().includes("0")){
+
+          this.setGameOver(leftnumber);
         }else{
-            if((leftnumber - this.state.centrenumber).toString().includes("0")){
-              this.setGameOver(leftnumber);
-            }else{
-              this.minusCount(leftnumber);
-          }
+          this.setCount(leftnumber);
         }
         this.refreshnumber();
         break;
       case SWIPE_RIGHT:
         console.log(gestureName);
-        console.log(operator);
-        if(operator == "+"){
-          if((rightnumber + this.state.centrenumber).toString().includes("0")){
-            this.setGameOver(rightnumber);
-          }else{
-              this.addCount(rightnumber);
-          }
-        }else{
-            if((rightnumber - this.state.centrenumber).toString().includes("0")){
-              this.setGameOver(rightnumber);
-            }else{
-              this.minusCount(rightnumber);
-          }
-        }
+        if((rightnumber + this.state.centrenumber).toString().includes("0")){
 
+          this.setGameOver(rightnumber);
+        }else{
+          this.setCount(rightnumber);
+        }
         this.refreshnumber();
         break;
     }
   }
-
-  
 
   render() {
     const { centrenumber } = this.state;
@@ -186,7 +126,7 @@ class CentureSum extends Component {
     return (
     <View style={{top:20}}>
       <View style={{marginBottom:10}}>
-        <Text style={styles.operatortext}>Operator: {operator}</Text>
+        <Text style={styles.operatortext}>Operator: {operators.divide}</Text>
       </View>
 
         <View style={styles.topnum}>
@@ -299,4 +239,4 @@ const styles = StyleSheet.create({
     }
     
 });
-export default CentureSum;
+export default HardCentureSum;
